@@ -12,7 +12,7 @@ A continuación se presentan los archivos del proyecto:
 * **[🔺 Dibujo de Triángulo](triangulo.html)** - Representación de triángulos.
 * **[📐 Formas Combinadas](cuadradotriangulo.html)** - Interacción entre cuadrado y triángulo.
 * **[✍️ Tarea de Composición](cuadradotriangulotarea.html)** - Ejercicio integrador de formas.
-* **[📊 Gráfico de Barras](graficobarras.html)** - Representación visual de datos mediante barras.
+* **[📊 Gráfico de Barras](graficobarras.html)
 
----
+
 *Estudiante: Jefferson Luna Quispe*
