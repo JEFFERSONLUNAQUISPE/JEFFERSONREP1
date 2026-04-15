@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>creación de un triángulo</title>
+</head>
+<body>
+    <h2>Dibujo de un triángulo</h2>
+    <h2>REALIZADO POR : Jefferson Luna Quispe</h2>
+
+    <canvas id="myCanvas" width="500" height="500" style="border:4px solid black;"></canvas>
+
+    <script>
+        // OBTENER EL CONTEXTO DE DIBUJO DEL CANVAS
+        var canvas = document.getElementById("myCanvas");
+        // Se obtiene el contexto de dibujo en 2D
+        var ctx = canvas.getContext("2d");
+
+        // Comenzar el trazado (en este punto se inicia el dibujo)
+        ctx.beginPath();
+
+        // Dibujar el triángulo definiendo sus puntos
+        ctx.moveTo(250, 150);  // Punto superior (centro arriba)
+        ctx.lineTo(150, 350);  // Punto inferior izquierdo
+        ctx.lineTo(350, 350);  // Punto inferior derecho
+        
+        // Cerrar el camino para volver al punto inicial automáticamente
+        ctx.closePath();
+
+        // Definir el color del relleno del triángulo
+        ctx.fillStyle = "orange";
+        // Rellenar el triángulo con el color definido
+        ctx.fill();
+        
+        // Dibujar el borde del triángulo
+        ctx.stroke();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Barras con Porcentajes (5 Columnas)</title>
+</head>
+<body>
+
+    <h2>Gráfico de Barras </h2>
+    <h2>REALIZADO POR : Jefferson Luna Quispe</h2>
+    <canvas id="myCanvas" width="550" height="500" style="border:4px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Datos ajustados para 5 columnas según la imagen.
+        // La barra del 100% tendrá una altura de 450px para dejar espacio al texto superior.
+        var datos = [100, 187, 275, 362, 450];
+        var colores = ["red", "blue", "green", "orange", "purple"];
+        var etiquetas = ["50%", "60%", "70%", "90%", "100%"];
+
+        // Configuración de dibujo para 5 barras
+        var x = 50; 
+        var width = 60; // Barras un poco más anchas para que se vean mejor
+
+        // Configuración de la fuente
+        ctx.font = "bold 16px Arial";
+        ctx.textAlign = "center";
+
+        for (var i = 0; i < datos.length; i++) {
+            ctx.beginPath();
+            
+            // Dibujar la barra apoyada en la base (y = 500)
+            ctx.rect(x, 500 - datos[i], width, datos[i]);
+            
+            // Aplicar el color de relleno de la barra
+            ctx.fillStyle = colores[i];
+            ctx.fill();
+            
+            // Aplicar el borde negro
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // DIBUJAR EL PORCENTAJE (COLOR ROJO)
+            ctx.fillStyle = "red"; // Color del texto cambiado a rojo
+            // El texto se dibuja 10px arriba del tope de la barra
+            ctx.fillText(etiquetas[i], x + (width / 2), 490 - datos[i]);
+
+            // Espacio entre barras (un poco más amplio para 5 barras)
+            x += width + 30; 
+        }
+    </script>
+
+</body>
+</html>
