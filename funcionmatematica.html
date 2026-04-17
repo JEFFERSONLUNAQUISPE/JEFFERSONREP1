@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 4: Función Matemática</title>
+</head>
+<body>
+    <h2>Ejercicio 4: Graficar una función matemática</h2>
+    <h2>REALIZADO POR : Jefferson Luna Quispe</h2>
+
+    <canvas id="myCanvas" width="500" height="500" style="border:4px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // 1. Dibujar líneas de guía (Ejes X e Y) para que la gráfica se entienda mejor
+        ctx.strokeStyle = "#000000"; 
+        ctx.beginPath();
+        ctx.moveTo(250, 0); ctx.lineTo(250, 500); // Eje Vertical
+        ctx.moveTo(0, 450); ctx.lineTo(500, 450); // Eje Horizontal
+        ctx.stroke();
+
+        // 2. COMENZAR EL TRAZADO DE LA FUNCIÓN
+        ctx.beginPath();
+        ctx.strokeStyle = "black"; 
+        ctx.lineWidth = 3;
+
+        // Recorremos valores de 'x' para calcular 'y'
+        // Usamos un bucle de -20 a 20 para que la parábola se vea centrada
+        for (var x = -20; x <= 20; x += 0.5) {
+            
+            // LA FUNCIÓN: y = x^2
+            var y = x * x; 
+
+            // AJUSTE PARA EL CANVAS:
+            // Sumamos 250 a 'x' para que el 0 esté en el medio del canvas.
+            // Restamos 'y' de 450 para que la curva crezca hacia ARRIBA.
+            var posX = 250 + (x * 10); 
+            var posY = 450 - (y * 1);
+
+            if (x === -20) {
+                ctx.moveTo(posX, posY); // Punto inicial
+            } else {
+                ctx.lineTo(posX, posY); // Dibuja la curva uniendo puntos
+            }
+        }
+
+        // Dibujar la línea final en el lienzo
+        ctx.stroke();
+    </script>
+</body>
+</html>
