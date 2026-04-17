@@ -9,3 +9,5 @@ Selecciona una tarea para visualizarla:
 * [ Ver Cuadrado y Triángulo](cuadradotriangulo.html)
 * [ Ver Tarea Completa](cuadradotriangulotarea.html)
 * [ Ver Gráfico de Barras](graficobarras.html)
+* [ Ver Funcion Matematica](funcionmatematica.html)
+
