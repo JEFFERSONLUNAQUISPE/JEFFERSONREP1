@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>linea dinamica con plano</title>
+</head>
+<body>
+    <h2>Línea Dinámica </h2>
+    <h2>REALIZADO POR : Jefferson Luna Quispe</h2>
+    <canvas id="myCanvas" width="800" height="400" style="border: 1px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // variables necesarias para el gráficos
+        var xstart = 0; 
+        var xend = 800; 
+        var step = 0.1; 
+        var time = 0; 
+
+        function drawGraph() {
+            // Limpiar el lienzo
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // --- DIBUJAR EL PLANO CARTESIANO ---
+            ctx.beginPath();
+            ctx.strokeStyle = "#aaaaaa"; // Color gris para los ejes
+            ctx.lineWidth = 1;
+
+            // Eje Horizontal (X) - Justo en la mitad vertical
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+
+            // Eje Vertical (Y) - Justo en la mitad horizontal
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            
+            ctx.stroke();
+            // ------------------------------------
+
+            // Configurar el estilo de la línea de la función
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue'; 
+            ctx.lineWidth = 2;
+
+            // Dibuja la función Y = sin(x)
+            for (var x = xstart; x < xend; x += step) {
+                // Función sinusoidal animada
+                var y = Math.sin(x * 0.01 + time); 
+
+                // Calculamos la posición final
+                // canvas.height/2 es el origen (el eje X que dibujamos arriba)
+                var drawY = canvas.height / 2 - y * 100;
+
+                if (x === xstart) {
+                    ctx.moveTo(x, drawY);
+                } else {
+                    ctx.lineTo(x, drawY);
+                }
+            }
+            ctx.stroke();
+        }
+
+        function animate() {
+            drawGraph();   
+            time += 0.04; 
+            requestAnimationFrame(animate); 
+        }
+
+        animate(); 
+    </script>  
+</body>
+</html>
