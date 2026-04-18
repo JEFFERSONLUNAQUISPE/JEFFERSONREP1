@@ -1,8 +1,6 @@
 # JEFFERSONREP1
 ### Repositorio de Computación Gráfica
 
-Selecciona una tarea para visualizarla:
-
 * [ Ver Círculo](circulo.html)
 * [ Ver Cuadrado](cuadrado.html)
 * [ Ver Triángulo](triangulo.html)
