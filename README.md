@@ -8,5 +8,8 @@
 * [ Ver Tarea Completa](cuadradotriangulotarea.html)
 * [ Ver Gráfico de Barras](graficobarras.html)
 * [ Ver linea animada](figura2d.html)
+* [ Ver Gráfico de Puntos en Movimiento](GraficodepuntosenMovimiento.html)
+* [ Ver Gráfico de Barras Dinámico](graficodebarrarDinamico.html)
+* [ Ver Curva Dinámica de la Función Coseno](CurvaDinamicaCoseno.html)
 
 
