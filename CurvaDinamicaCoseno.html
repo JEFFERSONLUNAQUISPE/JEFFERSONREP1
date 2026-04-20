@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3 - Función Coseno Dinámica</title>
+</head>
+<body>
+    <h2>Ejercicio 3: Curva Dinámica de la Función Coseno</h2>
+    <h2>REALIZADO POR: Jefferson Luna Quispe</h2>
+
+    <canvas id="canvasCoseno" width="800" height="400" style="border:1px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvasCoseno");
+        var ctx = canvas.getContext("2d");
+        
+        // El valor de x irá avanzando progresivamente con el tiempo [cite: 35]
+        var tiempo = 0; 
+
+        function dibujarGrafico() {
+            // Limpiar el lienzo antes de redibujar [cite: 22, 29]
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar plano cartesiano de referencia
+            ctx.strokeStyle = "#dddddd";
+            ctx.beginPath();
+            ctx.moveTo(0, 200); ctx.lineTo(800, 200); // Eje X
+            ctx.moveTo(400, 0); ctx.lineTo(400, 400); // Eje Y
+            ctx.stroke();
+
+            // Configurar estilo de la curva coseno
+            ctx.beginPath();
+            ctx.strokeStyle = "purple";
+            ctx.lineWidth = 3;
+
+            // 2. Calcular puntos de la función coseno 
+            for (var x = 0; x < canvas.width; x++) {
+                
+                // Función matemática y = cos(x) [cite: 34]
+                // Ajustamos la escala para que se vea bien en el canvas
+                var y = Math.cos(x * 0.05 + tiempo) * 100;
+
+                // 3. Dibujar la curva usando líneas 
+                if (x === 0) {
+                    ctx.moveTo(x, 200 + y);
+                } else {
+                    ctx.lineTo(x, 200 + y);
+                }
+            }
+            
+            // La línea cambiará dinámicamente en tiempo real [cite: 37]
+            ctx.stroke();
+
+            // 5. Mostrar el movimiento de la curva conforme cambie la variable 
+            // Incrementamos la variable para el siguiente segundo
+            tiempo += 1.0; 
+        }
+
+        // 4. Actualizar los valores cada segundo 
+        // Usamos 1000 milisegundos para cumplir estrictamente con la consigna
+        setInterval(dibujarGrafico, 1000);
+
+        // Llamada inicial para que no empiece en blanco
+        dibujarGrafico();
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2 - Puntos en Movimiento</title>
+</head>
+<body>
+    <h2>Ejercicio 2: Gráfico de Puntos en Movimiento</h2>
+    <h2>REALIZADO POR: Jefferson Luna Quispe</h2>
+    <canvas id="canvasPuntos" width="500" height="400" style="border:1px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvasPuntos");
+        var ctx = canvas.getContext("2d");
+
+        function dibujarPuntos() {
+            // Usar clearRect() para limpiar el lienzo [cite: 29]
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar al menos 5 puntos [cite: 26]
+            for (let i = 0; i < 5; i++) {
+                // Actualizar sus coordenadas de manera aleatoria [cite: 21, 27]
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = "red";
+                ctx.fill();
+            }
+        }
+        // Ejecutar cada segundo [cite: 27]
+        setInterval(dibujarPuntos, 1000);
+    </script>
+</body>
+</html>
