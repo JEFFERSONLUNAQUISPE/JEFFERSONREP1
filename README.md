@@ -1,18 +1,165 @@
-# JEFFERSONREP1
-### [ COMPUTACIÓN GRÁFICA • PORTAFOLIO 2026 ]
-**Estudiante:** Jefferson Luna Quispe
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio - Computación Gráfica</title>
 
-| FECHA | PROYECTO |
-| :--- | :--- |
-| **01/04** |  [Círculo](circulo.html) |
-| **05/04** |  [Cuadrado](cuadrado.html) |
-| **08/04** |  [Triángulo](triangulo.html) |
-| **10/04** |  [Cuadrado y Triángulo](cuadradotriangulo.html) |
-| **12/04** |  [Tarea Completa](cuadradotriangulotarea.html) |
-| **15/04** |  [Gráfico de Barras](graficobarras.html) |
-| **18/04** |  [Línea Animada](figura2d.html) |
-| **20/04** |  [Puntos en Movimiento](GraficodepuntosenMovimiento.html) |
-| **20/04** |  [Barras Dinámico](graficodebarrarDinamico.html) |
-| **20/04** |  [Curva Coseno](CurvaDinamicaCoseno.html) |
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    background: #0b1220;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.header p {
+    margin: 5px 0;
+    color: #94a3b8;
+}
+
+/* TITULOS */
+.section-title {
+    color: #38bdf8;
+    margin: 25px 0 15px;
+    font-weight: bold;
+}
+
+/* TARJETAS */
+.card {
+    background: #1e293b;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    background: #334155;
+    transform: scale(1.02);
+}
+
+/* BOTÓN */
+.btn {
+    background: #38bdf8;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    color: #0f172a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #0ea5e9;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #64748b;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>JEFFERSONREP1</h1>
+        <p>Computación Gráfica • Portafolio 2026</p>
+        <p><b>Estudiante:</b> Jefferson Luna Quispe</p>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="section-title">📘 Proyectos</div>
+
+    <div class="card">
+        <span>01/04 - Círculo</span>
+        <a href="circulo.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>05/04 - Cuadrado</span>
+        <a href="cuadrado.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>08/04 - Triángulo</span>
+        <a href="triangulo.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>10/04 - Cuadrado y Triángulo</span>
+        <a href="cuadradotriangulo.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>12/04 - Tarea Completa</span>
+        <a href="cuadradotriangulotarea.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>15/04 - Gráfico de Barras</span>
+        <a href="graficobarras.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>18/04 - Línea Animada</span>
+        <a href="figura2d.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>20/04 - Puntos en Movimiento</span>
+        <a href="GraficodepuntosenMovimiento.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>20/04 - Barras Dinámico</span>
+        <a href="graficodebarrarDinamico.html" class="btn">Ver</a>
+    </div>
+
+    <div class="card">
+        <span>20/04 - Curva Coseno</span>
+        <a href="CurvaDinamicaCoseno.html" class="btn">Ver</a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        Computación Gráfica - 2026
+    </div>
+
+</div>
+
+</body>
+</html>
 
 
