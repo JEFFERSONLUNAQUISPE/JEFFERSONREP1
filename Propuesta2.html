@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rotación Multicolor</title>
 </head>
-<body style="background-color: #000814;"> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>    
-
+<body style="background-color: #000814; margin: 0;">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>    
 <script>
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); 
@@ -15,9 +14,18 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.BoxGeometry(1,1,1);
-// Cambio: Color amarillo eléctrico
-const material = new THREE.MeshBasicMaterial({ color: 0xffea00 }); 
-const cubo = new THREE.Mesh(geometry, material);
+
+// Colores pastel para las 6 caras
+const materials = [
+    new THREE.MeshBasicMaterial({ color: 0xffadad }),
+    new THREE.MeshBasicMaterial({ color: 0xffd6a5 }),
+    new THREE.MeshBasicMaterial({ color: 0xfdffb6 }),
+    new THREE.MeshBasicMaterial({ color: 0xcaffbf }),
+    new THREE.MeshBasicMaterial({ color: 0x9bf6ff }),
+    new THREE.MeshBasicMaterial({ color: 0xa0c4ff })
+];
+
+const cubo = new THREE.Mesh(geometry, materials);
 scene.add(cubo);   
 
 camera.position.z = 5;
