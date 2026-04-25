@@ -2,43 +2,41 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Traslación en eje X</title>
+<title>Traslación - Caras Multicolor</title>
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #121212; /* Fondo oscuro */
-}
+body { margin: 0; overflow: hidden; background: #121212; }
 #info {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(0,0,0,0.7); /* Caja traslúcida negra */
-    color: #ffaa00; /* Texto naranja */
-    padding: 10px;
-    border-radius: 8px;
-    font-family: Arial;
-    border: 1px solid #ffaa00;
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(0,0,0,0.7); color: #00ffcc;
+    padding: 10px; border-radius: 8px; font-family: Arial;
+    border: 1px solid #00ffcc;
 }
 </style>
 </head>
-
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script>
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true }); // Suavizado de bordes
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.BoxGeometry(1,1,1);
-// Cambio: Color sólido naranja en lugar de NormalMaterial
-const material = new THREE.MeshBasicMaterial({ color: 0xffaa00 }); 
-const cubo = new THREE.Mesh(geometry, material);
+
+// Definimos un arreglo con 6 materiales (uno para cada cara)
+const materials = [
+    new THREE.MeshBasicMaterial({ color: 0xff0055 }), // Derecha
+    new THREE.MeshBasicMaterial({ color: 0x00ffcc }), // Izquierda
+    new THREE.MeshBasicMaterial({ color: 0x0066ff }), // Arriba
+    new THREE.MeshBasicMaterial({ color: 0xffcc00 }), // Abajo
+    new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Frente
+    new THREE.MeshBasicMaterial({ color: 0x55ff00 })  // Atrás
+];
+
+const cubo = new THREE.Mesh(geometry, materials);
 scene.add(cubo);
 
 let direccion = 1;     
@@ -48,6 +46,10 @@ const limite = 2;
 function animate() {
     requestAnimationFrame(animate);
     cubo.position.x += velocidad * direccion;
+    // Rotamos un poco para que se vean las caras de colores
+    cubo.rotation.y += 0.01;
+    cubo.rotation.x += 0.01;
+
     if (cubo.position.x > limite || cubo.position.x < -limite) {
         direccion *= -1;
     }
