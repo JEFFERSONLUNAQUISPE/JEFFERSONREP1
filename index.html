@@ -1,177 +1,262 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portafolio - Computación Gráfica</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Computación Gráfica</title>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg: #050810;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text: #f1f5f9;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: white;
-}
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 40%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
-/* CONTENEDOR PRINCIPAL */
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 50px auto;
-    background: #0b1220;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.6);
-}
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-/* HEADER */
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-}
+        /* HEADER ESTILO GLASS */
+        .header {
+            text-align: center;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 50px;
+        }
 
-.header h1 {
-    margin: 0;
-    font-size: 20px;
-}
+        .header h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
 
-.header p {
-    margin: 5px 0;
-    color: #94a3b8;
-}
+        .header p { color: #94a3b8; font-size: 1.1rem; margin-top: 10px; }
 
-/* TITULOS */
-.section-title {
-    color: #38bdf8;
-    margin: 25px 0 15px;
-    font-weight: bold;
-}
+        /* SECCIONES DE ACTIVIDAD */
+        .activity-group {
+            margin-bottom: 60px;
+        }
 
-/* TARJETAS */
-.card {
-    background: #1e293b;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: 0.3s;
-}
+        .activity-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
 
-.card:hover {
-    background: #334155;
-    transform: scale(1.02);
-}
+        .activity-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
 
-/* BOTÓN */
-.btn {
-    background: #38bdf8;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    color: #0f172a;
-    font-weight: bold;
-    text-decoration: none;
-}
+        /* GRID DE TARJETAS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-.btn:hover {
-    background: #0ea5e9;
-}
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* FOOTER */
-.footer {
-    text-align: center;
-    margin-top: 20px;
-    color: #64748b;
-}
-</style>
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0.5;
+        }
+
+        .card span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.25rem;
+            color: #fff;
+            line-height: 1.4;
+        }
+
+        /* BOTÓN MODERNO */
+        .btn {
+            display: inline-block;
+            text-align: center;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <header class="header">
+        <h1>JEFFERSON LUNA</h1>
+        <p>Proyectos de Computación Gráfica 2026</p>
+    </header>
 
-    <!-- HEADER -->
-    <div class="header">
-        <h1>JEFFERSONREP1</h1>
-        <p>Computación Gráfica • Portafolio 2026</p>
-        <p><b>Estudiante:</b> Jefferson Luna Quispe</p>
-    </div>
+    <section class="activity-group">
+        <div class="activity-title">Actividades en Clase</div>
+        <div class="grid">
+            <div class="card">
+                <span>01 de Abril</span>
+                <h3>Dibujo de Círculo</h3>
+                <a href="circulo.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>05 de Abril</span>
+                <h3>Dibujo de Cuadrado</h3>
+                <a href="cuadrado.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>08 de Abril</span>
+                <h3>Dibujo de Triángulo</h3>
+                <a href="triangulo.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>10 de Abril</span>
+                <h3>Composición: Cuadrado y Triángulo</h3>
+                <a href="cuadradotriangulo.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>12 de Abril</span>
+                <h3>Tarea Completa Geometría</h3>
+                <a href="cuadradotriangulotarea.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>15 de Abril</span>
+                <h3>Gráfico de Barras Estático</h3>
+                <a href="graficobarras.html" class="btn">Explorar</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- PROYECTOS -->
-    <div class="section-title">📘 Proyectos</div>
+    <section class="activity-group">
+        <div class="activity-title">Actividad 4</div>
+        <div class="grid">
+            <div class="card">
+                <span>18 de Abril</span>
+                <h3>Línea Animada</h3>
+                <a href="figura2d.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>20 de Abril</span>
+                <h3>Puntos en Movimiento</h3>
+                <a href="GraficodepuntosenMovimiento.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>20 de Abril</span>
+                <h3>Gráfico de Barras Dinámico</h3>
+                <a href="graficodebarrarDinamico.html" class="btn">Explorar</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="card">
-        <span>01/04 - Círculo</span>
-        <a href="circulo.html" class="btn">Ver</a>
-    </div>
+    <section class="activity-group">
+        <div class="activity-title">Actividad 5: Transformaciones 3D</div>
+        <div class="grid">
+            <div class="card">
+                <span>20 de Abril</span>
+                <h3>Curva Coseno Dinámica</h3>
+                <a href="CurvaDinamicaCoseno.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>21 de Abril</span>
+                <h3>Traslación 3D</h3>
+                <a href="Propuesta1.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>21 de Abril</span>
+                <h3>Rotación y Transformación</h3>
+                <a href="Propuesta2.html" class="btn">Explorar</a>
+            </div>
+        </div>
+    </section>
+    <section class="activity-group">
+        <div class="activity-title">Actividad 6: Investigar</div>
+        <div class="grid">
+            <div class="card">
+                <span>24 de Abril</span>
+                <h3>Curvas Parametricas</h3>
+                <a href="curvasparametricass.html" class="btn">Explorar</a>
+            </div>
+            <div class="card">
+                <span>24 de Abril</span>
+                <h3>Malla Poligonales</h3>
+                <a href="mallaspoligonales.html" class="btn">Explorar</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="card">
-        <span>05/04 - Cuadrado</span>
-        <a href="cuadrado.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>08/04 - Triángulo</span>
-        <a href="triangulo.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>10/04 - Cuadrado y Triángulo</span>
-        <a href="cuadradotriangulo.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>12/04 - Tarea Completa</span>
-        <a href="cuadradotriangulotarea.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>15/04 - Gráfico de Barras</span>
-        <a href="graficobarras.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>18/04 - Línea Animada</span>
-        <a href="figura2d.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>20/04 - Puntos en Movimiento</span>
-        <a href="GraficodepuntosenMovimiento.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>20/04 - Barras Dinámico</span>
-        <a href="graficodebarrarDinamico.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>21/04 - Curva Coseno</span>
-        <a href="CurvaDinamicaCoseno.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>21/04 - Propuesta 1 Traslación </span>
-        <a href="Propuesta1.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>21/04 - Propuesta 2 Rotación </span>
-        <a href="Propuesta2.html" class="btn">Ver</a>
-    </div>
-
-    <div class="card">
-        <span>20/04 - Propuesta 3  Interactivo </span>
-        <a href="Propuesta3.html" class="btn">Ver</a>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        Computación Gráfica - 2026
-    </div>
-
+    <footer class="footer">
+        Desarrollado por Jefferson Luna • Ingeniería de Sistemas 2026
+    </footer>
 </div>
 
 </body>
