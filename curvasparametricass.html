@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monografía Técnica - Curvas Paramétricas</title>
+    <style>
+        :root {
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-blue: #2563eb;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #cbd5e1;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* SIMULACIÓN DE PÁGINA A4 */
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2.54cm; /* Margen APA */
+            margin: 30px auto;
+            background: var(--white);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* PORTADA */
+        .cover {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 24cm;
+        }
+
+        .university-name { font-size: 1.4rem; font-weight: bold; text-transform: uppercase; }
+        .facultad { font-size: 1.2rem; margin-top: 10px; }
+        .title-box { margin: 100px 0; }
+        .title-box h1 { font-size: 2.2rem; text-transform: uppercase; line-height: 1.2; }
+        .author-info { text-align: right; margin-top: 50px; font-size: 1.1rem; }
+
+        /* CUERPO DEL DOCUMENTO */
+        h2 { font-size: 1.6rem; border-bottom: 2px solid var(--accent-blue); padding-bottom: 5px; margin-top: 30px; color: #000; }
+        h3 { font-size: 1.3rem; margin-top: 25px; color: var(--accent-blue); }
+        
+        p { text-indent: 1.27cm; text-align: justify; margin-bottom: 15px; font-size: 11pt; }
+
+        .abstract {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 5px;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .formula-container {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .image-placeholder {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px dashed #94a3b8;
+            padding: 10px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .bibliography { list-style: none; padding-left: 0; }
+        .bibliography li { margin-bottom: 10px; padding-left: 1.27cm; text-indent: -1.27cm; }
+
+        /* ESTILOS DE IMPRESIÓN */
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; }
+            .btn-print { display: none; }
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<button class="btn-print" onclick="window.print()">Imprimir PDF</button>
+
+<div class="page">
+    <div class="cover">
+        <div>
+            <div class="university-name">Universidad Nacional de Ingeniería</div>
+            <div class="facultad">Facultad de Ingeniería de Sistemas</div>
+        </div>
+
+        <div class="title-box">
+            <p>TRABAJO DE INVESTIGACIÓN</p>
+            <h1>Análisis y Aplicación de Curvas Paramétricas en el Modelado por Computadora</h1>
+        </div>
+
+        <div class="author-info">
+            Presentado por:<br>
+            <strong>Jefferson Luna Quispe</strong><br><br>
+            Curso:<br>
+            Computación Gráfica<br><br>
+            Docente:<br>
+            Ing. Especialista en Gráficos<br><br>
+            Perú - 2026
+        </div>
+    </div>
+</div>
+
+<div class="page">
+    <h2>Resumen</h2>
+    <div class="abstract">
+        El presente documento analiza la importancia de las curvas paramétricas como base fundamental del diseño asistido por computadora (CAD) y la animación digital. Se exploran los fundamentos matemáticos que permiten a estas curvas superar las limitaciones de las funciones cartesianas tradicionales, permitiendo la creación de formas orgánicas y complejas con un bajo costo de procesamiento computacional.
+    </div>
+
+    <h2>Capítulo I: Introducción a las Curvas Paramétricas</h2>
+    <h3>1.1 Definición Conceptual</h3>
+    <p>
+        Una curva paramétrica es una representación geométrica donde cada coordenada de un punto en el espacio (x, y, z) se expresa como una función de un parámetro independiente, generalmente denominado como <i>t</i>. A diferencia de las curvas explícitas, la forma paramétrica no depende de la resolución de los ejes, sino de la evolución de sus funciones internas.
+    </p>
+
+    <h3>1.2 Limitaciones de las Funciones Explícitas</h3>
+    <p>
+        En la computación gráfica inicial, se utilizaban funciones del tipo $y = f(x)$. Sin embargo, este enfoque presentaba dificultades críticas: la imposibilidad de representar líneas verticales (donde la pendiente tiende al infinito) y la dificultad para representar curvas que se cierran sobre sí mismas o tienen múltiples valores de <i>y</i> para un solo valor de <i>x</i>. Las curvas paramétricas solucionan esto al tratar cada dimensión como una entidad separada.
+    </p>
+
+    <div class="formula-container">
+        P(t) = [x(t), y(t), z(t)]ᵀ <br>
+        para t ∈ [0, 1]
+    </div>
+</div>
+
+<div class="page">
+    <h2>Capítulo II: Tipología de Curvas</h2>
+    
+    <h3>2.1 Curvas de Bézier</h3>
+    <p>
+        Propuestas por Pierre Bézier en la década de 1960 para el diseño de carrocerías de automóviles, estas curvas utilizan polinomios de Bernstein para interpolar puntos. La característica principal es que la curva está contenida dentro del "envolvente convexo" de sus puntos de control, lo que garantiza un comportamiento predecible y suave.
+    </p>
+
+    <div class="image-placeholder">
+        [Gráfico: Representación de una Curva de Bézier Cúbica y sus vectores tangentes]
+    </div>
+
+    <h3>2.2 Splines y B-Splines</h3>
+    <p>
+        Un Spline es una curva definida por trozos (polinomios de bajo grado unidos). Las B-Splines (Basis Splines) mejoran las curvas de Bézier al introducir el "control local". Esto significa que si un diseñador mueve un punto de control en un extremo de la figura, solo se altera la sección cercana a ese punto, manteniendo el resto de la geometría intacta.
+    </p>
+
+    <h3>2.3 NURBS (Non-Uniform Rational B-Splines)</h3>
+    <p>
+        Son la herramienta más avanzada en el modelado 3D profesional. Al ser "racionales", permiten representar de manera exacta formas cónicas como círculos y elipses, algo que los polinomios estándar solo pueden aproximar. Son el estándar en software como Rhinoceros, Maya y AutoCAD.
+    </p>
+</div>
+
+<div class="page">
+    <h2>Capítulo III: Aplicaciones en la Industria</h2>
+    <p>
+        Las aplicaciones de este formalismo matemático son vastas. En la industria de los videojuegos, las curvas paramétricas se utilizan para definir la trayectoria de la cámara y de los personajes (interpolación de movimiento). En el desarrollo de interfaces (UI), se utilizan para suavizar las esquinas de los botones y los efectos de transición.
+    </p>
+
+    <h2>Conclusiones</h2>
+    <p>
+        1. Las curvas paramétricas permiten una manipulación geométrica intuitiva mediante puntos de control.
+    </p>
+    <p>
+        2. Su naturaleza matemática las hace independientes de la resolución, permitiendo que un diseño escale infinitamente sin pérdida de calidad (vectores).
+    </p>
+    <p>
+        3. La comprensión de los Splines es esencial para cualquier programador de gráficos que busque optimizar el rendimiento y la estética visual de un sistema.
+    </p>
+
+    <h2 style="margin-top: 50px;">Referencias Bibliográficas</h2>
+    <ul class="bibliography">
+        <li>Hearn, D., & Baker, M. P. (2026). <i>Computer Graphics with OpenGL</i>. Pearson Education.</li>
+        <li>Bézier, P. (1972). <i>Numerical Control: Mathematics and Applications</i>. John Wiley & Sons.</li>
+        <li>Watt, A. (2000). <i>3D Computer Graphics</i>. Addison-Wesley.</li>
+        <li>Luna, J. (2026). <i>Notas de clase: Computación Gráfica Avanzada</i>. UNI.</li>
+    </ul>
+</div>
+
+</body>
+</html>

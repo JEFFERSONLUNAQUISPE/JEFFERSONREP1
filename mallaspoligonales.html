@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monografía Técnica - Mallas Poligonales</title>
+    <style>
+        :root {
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-green: #10b981;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #cbd5e1;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* SIMULACIÓN DE PÁGINA A4 */
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2.54cm; /* Margen Estándar */
+            margin: 30px auto;
+            background: var(--white);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* PORTADA */
+        .cover {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 24cm;
+        }
+
+        .university-name { font-size: 1.4rem; font-weight: bold; text-transform: uppercase; }
+        .facultad { font-size: 1.2rem; margin-top: 10px; }
+        .title-box { margin: 100px 0; }
+        .title-box h1 { font-size: 2.2rem; text-transform: uppercase; line-height: 1.2; }
+        .author-info { text-align: right; margin-top: 50px; font-size: 1.1rem; }
+
+        /* CUERPO DEL DOCUMENTO */
+        h2 { font-size: 1.6rem; border-bottom: 2px solid var(--accent-green); padding-bottom: 5px; margin-top: 30px; color: #000; }
+        h3 { font-size: 1.3rem; margin-top: 25px; color: var(--accent-green); }
+        
+        p { text-indent: 1.27cm; text-align: justify; margin-bottom: 15px; font-size: 11pt; }
+
+        .abstract {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 5px;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .data-structure {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+        }
+
+        .image-placeholder {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px dashed #94a3b8;
+            padding: 15px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: #fafafa;
+        }
+
+        .bibliography { list-style: none; padding-left: 0; }
+        .bibliography li { margin-bottom: 10px; padding-left: 1.27cm; text-indent: -1.27cm; }
+
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; }
+            .btn-print { display: none; }
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<button class="btn-print" onclick="window.print()">Descargar Monografía (PDF)</button>
+
+<div class="page">
+    <div class="cover">
+        <div>
+            <div class="university-name">Universidad Nacional de Ingeniería</div>
+            <div class="facultad">Facultad de Ingeniería de Sistemas</div>
+        </div>
+
+        <div class="title-box">
+            <p>TRABAJO DE INVESTIGACIÓN - TEMA 02</p>
+            <h1>Representación y Estructura de Mallas Poligonales en Entornos Tridimensionales</h1>
+        </div>
+
+        <div class="author-info">
+            Presentado por:<br>
+            <strong>Jefferson Luna Quispe</strong><br><br>
+            Curso:<br>
+            Computación Gráfica<br><br>
+            Docente:<br>
+            Ing. Especialista en Gráficos<br><br>
+            Perú - 2026
+        </div>
+    </div>
+</div>
+
+<div class="page">
+    <h2>Resumen</h2>
+    <div class="abstract">
+        Las mallas poligonales constituyen el estándar de facto para la representación de superficies en la computación gráfica moderna. Este documento explora la composición topológica de las mallas, las estructuras de datos que permiten su almacenamiento eficiente y las técnicas de optimización necesarias para el renderizado en tiempo real. Se enfatiza el papel del triángulo como primitiva geométrica fundamental y la gestión de la conectividad entre elementos.
+    </div>
+
+    <h2>Capítulo I: Fundamentos de las Mallas Poligonales</h2>
+    <h3>1.1 Definición de Malla</h3>
+    <p>
+        Una malla poligonal es un conjunto de vértices, aristas y caras que definen la forma de un objeto poliedro. En términos matemáticos, se puede ver como un grafo incrustado en un espacio euclidiano donde los nodos son posiciones espaciales y las caras representan la superficie exterior que debe ser procesada por el hardware gráfico (GPU).
+    </p>
+
+    <h3>1.2 Componentes Geométricos</h3>
+    <p>
+        Toda malla está compuesta por tres elementos jerárquicos:
+    </p>
+    <ul>
+        <li><strong>Vértices (V):</strong> Puntos en el espacio 3D definidos por coordenadas (x, y, z). Suelen incluir datos adicionales como normales, colores y coordenadas UV.</li>
+        <li><strong>Aristas (E):</strong> Segmentos de línea que conectan dos vértices.</li>
+        <li><strong>Caras (F):</strong> Superficies cerradas delimitadas por aristas. Aunque pueden tener N lados, en computación se prefieren los triángulos (Tris).</li>
+    </ul>
+
+    <div class="image-placeholder">
+        [Figura 1: Anatomía de una malla: Vértice, Arista y Cara en un entorno 3D]
+    </div>
+</div>
+
+<div class="page">
+    <h2>Capítulo II: Almacenamiento y Estructuras de Datos</h2>
+    
+    <h3>2.1 Representación por Lista de Caras</h3>
+    <p>
+        Es la forma más simple pero ineficiente, donde cada cara almacena las coordenadas de sus vértices directamente. Esto duplica datos, ya que un vértice compartido por 6 triángulos se almacenaría 6 veces, desperdiciando memoria y dificultando la edición.
+    </p>
+
+    <h3>2.2 Lista de Vértices Indexados (Indexed Face Set)</h3>
+    <p>
+        Es el estándar utilizado en formatos como OBJ o en las API gráficas (OpenGL/DirectX). Se mantienen dos listas separadas: una con los datos únicos de los vértices y otra con índices que indican qué vértices forman cada cara.
+    </p>
+
+    <div class="data-structure">
+        Vertices = [V0(x,y,z), V1(x,y,z), V2(x,y,z), V3(x,y,z)];<br>
+        Indices = [0, 1, 2,  1, 2, 3]; // Define dos triángulos compartiendo la arista V1-V2
+    </div>
+
+    <h3>2.3 Estructura "Winged-Edge" (Arista Alada)</h3>
+    <p>
+        Utilizada en software de modelado avanzado. A diferencia de las listas simples, esta estructura almacena explícitamente la conectividad: qué caras son adyacentes y qué aristas comparten un vértice. Es vital para algoritmos de subdivisión de superficies y simplificación de mallas.
+    </p>
+</div>
+
+<div class="page">
+    <h2>Capítulo III: Optimización y Renderizado</h2>
+    
+    <h3>3.1 La Prevalencia del Triángulo</h3>
+    <p>
+        Los triángulos son la unidad básica de procesamiento por dos razones fundamentales: siempre son coplanares (sus puntos siempre definen un plano perfecto) y cualquier polígono complejo puede ser descompuesto en triángulos de forma unívoca mediante algoritmos de triangulación.
+    </p>
+
+    <h3>3.2 Normales de Superficie</h3>
+    <p>
+        Para el cálculo de iluminación, cada cara o vértice posee un vector "Normal" (perpendicular a la superficie). Estas determinan cómo interactúa la luz con el objeto, permitiendo efectos como el sombreado suave (Gouraud o Phong) incluso en mallas de baja resolución.
+    </p>
+
+    <h2>Conclusiones</h2>
+    <p>
+        1. Las mallas poligonales permiten un equilibrio óptimo entre precisión visual y costo computacional.
+    </p>
+    <p>
+        2. La eficiencia de una aplicación 3D depende directamente de la organización de los índices de la malla para maximizar el uso del caché de la GPU.
+    </p>
+    <p>
+        3. El futuro de las mallas reside en tecnologías como Nanite (Unreal Engine), que permiten procesar miles de millones de polígonos mediante el manejo dinámico de niveles de detalle (LOD).
+    </p>
+
+    <h2 style="margin-top: 50px;">Referencias Bibliográficas</h2>
+    <ul class="bibliography">
+        <li>Akenine-Möller, T., Haines, E., & Hoffman, N. (2026). <i>Real-Time Rendering</i>. CRC Press.</li>
+        <li>Botsch, M., Kobbelt, L., Pauly, M., Alliez, P., & Lévy, B. (2010). <i>Polygon Mesh Processing</i>. AK Peters/CRC Press.</li>
+        <li>Shirley, P., & Marschner, S. (2026). <i>Fundamentals of Computer Graphics</i>. A K Peters.</li>
+        <li>Luna, J. (2026). <i>Investigación de Estructuras de Datos Geométricas</i>. UNI.</li>
+    </ul>
+</div>
+
+</body>
+</html>
