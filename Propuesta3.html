@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Interactivo Multicolor</title>
 <style>
+/* Estilos básicos para que el lienzo ocupe toda la pantalla */
 body { margin: 0; overflow: hidden; font-family: sans-serif; }
+
+/* Cuadro de información (UI) flotando arriba a la izquierda */
 #info { 
     position: absolute; top: 10px; left: 10px;
-    background: rgba(255, 255, 255, 0.9); padding: 15px;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco casi opaco */
+    padding: 15px;
     border-radius: 8px; font-size: 14px;
-    border-left: 5px solid #e74c3c;
+    border-left: 5px solid #e74c3c; /* Línea decorativa roja a la izquierda */
+    z-index: 10; /* Asegura que el texto esté por encima del 3D */
 }
 </style>
 </head>
 <body>
+
 <div id="info">
     <strong>CONTROLES MULTICOLOR</strong><br><br>
-    FLECHAS: Mover<br>
-    Q/E : Rotar<br>
-    Z/X : Escalar
+    FLECHAS: Mover (Posición)<br>
+    Q/E : Rotar (Giro)<br>
+    Z/X : Escalar (Tamaño)
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
 <script>
+    /**
+     * 1. CONFIGURACIÓN DEL MUNDO 3D
+     */
     const scene = new THREE.Scene();
+    // Cambiamos el color de fondo de la escena a un gris muy claro (0xecf0f1)
     scene.background = new THREE.Color(0xecf0f1);
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -30,9 +42,11 @@ body { margin: 0; overflow: hidden; font-family: sans-serif; }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    /**
+     * 2. OBJETO: CUBO CON 6 COLORES VIVOS
+     */
     const geometry = new THREE.BoxGeometry(1,1,1);
 
-    // Colores vivos para las 6 caras
     const materials = [
         new THREE.MeshBasicMaterial({ color: 0xe74c3c }), // Rojo
         new THREE.MeshBasicMaterial({ color: 0x3498db }), // Azul
@@ -45,20 +59,32 @@ body { margin: 0; overflow: hidden; font-family: sans-serif; }
     const cubo = new THREE.Mesh(geometry, materials);
     scene.add(cubo);
 
-    camera.position.z = 5;
+    camera.position.z = 5; // Posicionamos la cámara para ver el cubo de frente
 
+    /**
+     * 3. CONTROL POR TECLADO (INTERACTIVIDAD)
+     * Escuchamos el evento 'keydown' (tecla presionada)
+     */
     window.addEventListener('keydown', (event) => {
+        // 'switch' evalúa qué tecla se presionó
         switch(event.key) {
-            case 'ArrowUp': cubo.position.y += 0.2; break;
-            case 'ArrowDown': cubo.position.y -= 0.2; break;
-            case 'ArrowLeft': cubo.position.x -= 0.2; break;
-            case 'ArrowRight': cubo.position.x += 0.2; break;
-            case 'q': case 'Q': cubo.rotation.y -= 0.1; break;
-            case 'e': case 'E': cubo.rotation.y += 0.1; break;
+            // TRASLACIÓN (Flechas)
+            case 'ArrowUp':    cubo.position.y += 0.2; break; // Sube
+            case 'ArrowDown':  cubo.position.y -= 0.2; break; // Baja
+            case 'ArrowLeft':  cubo.position.x -= 0.2; break; // Izquierda
+            case 'ArrowRight': cubo.position.x += 0.2; break; // Derecha
+
+            // ROTACIÓN (Q y E)
+            case 'q': case 'Q': cubo.rotation.y -= 0.1; break; // Rota a la izquierda
+            case 'e': case 'E': cubo.rotation.y += 0.1; break; // Rota a la derecha
+
+            // ESCALADO (Aumentar con Z, disminuir con X)
             case 'z': case 'Z':
+                // Aumentamos 0.1 en los tres ejes al mismo tiempo
                 cubo.scale.x += 0.1; cubo.scale.y += 0.1; cubo.scale.z += 0.1;
                 break;
-            case 'x':
+            case 'x': case 'X':
+                // Disminuimos el tamaño, pero usamos Math.max para que no llegue a 0 o sea negativo
                 cubo.scale.x = Math.max(0.2, cubo.scale.x - 0.1);
                 cubo.scale.y = Math.max(0.2, cubo.scale.y - 0.1);
                 cubo.scale.z = Math.max(0.2, cubo.scale.z - 0.1);
@@ -66,12 +92,19 @@ body { margin: 0; overflow: hidden; font-family: sans-serif; }
         }
     });
 
+    /**
+     * 4. BUCLE DE RENDERIZADO
+     */
     function animate() {
         requestAnimationFrame(animate);
+        // Aquí no hay rotación automática, el cubo solo se mueve si el usuario toca las teclas
         renderer.render(scene, camera);
     }
     animate();
 
+    /**
+     * 5. AJUSTE DE VENTANA (RESPONSIVE)
+     */
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
