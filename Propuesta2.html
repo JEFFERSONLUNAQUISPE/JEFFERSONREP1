@@ -1,41 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Rotación Multicolor</title>
 </head>
 <body style="background-color: #000814; margin: 0;">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>    
+
 <script>
+/**
+ * 1. CONFIGURACIÓN DEL ENTORNO
+ */
+
+// Scene: Es el espacio 3D (el universo) donde colocaremos nuestro objeto.
 const scene = new THREE.Scene();
+
+// PerspectiveCamera: Define cómo vemos el mundo. 
+// Parámetros: (Campo de visión, Proporción pantalla, Corte cercano, Corte lejano).
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); 
+
+// WebGLRenderer: El motor que "dibuja" los polígonos. 
+// antialias: true sirve para suavizar los bordes y que no se vean pixelados.
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+// Ajustamos el tamaño del renderizador al tamaño de nuestra ventana.
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Agregamos el "canvas" (el lienzo de dibujo) al cuerpo del documento HTML.
 document.body.appendChild(renderer.domElement);
 
+/**
+ * 2. GEOMETRÍA Y MATERIALES (El Cubo)
+ */
+
+// BoxGeometry: Crea la forma de un cubo con dimensiones 1x1x1.
 const geometry = new THREE.BoxGeometry(1,1,1);
 
-// Colores pastel para las 6 caras
+// Definimos un arreglo (lista) con 6 materiales diferentes para cada cara del cubo.
+// Se usan colores pastel en formato hexadecimal (ej: 0xffadad es un rosa suave).
 const materials = [
-    new THREE.MeshBasicMaterial({ color: 0xffadad }),
-    new THREE.MeshBasicMaterial({ color: 0xffd6a5 }),
-    new THREE.MeshBasicMaterial({ color: 0xfdffb6 }),
-    new THREE.MeshBasicMaterial({ color: 0xcaffbf }),
-    new THREE.MeshBasicMaterial({ color: 0x9bf6ff }),
-    new THREE.MeshBasicMaterial({ color: 0xa0c4ff })
+    new THREE.MeshBasicMaterial({ color: 0xffadad }), // Cara derecha
+    new THREE.MeshBasicMaterial({ color: 0xffd6a5 }), // Cara izquierda
+    new THREE.MeshBasicMaterial({ color: 0xfdffb6 }), // Cara arriba
+    new THREE.MeshBasicMaterial({ color: 0xcaffbf }), // Cara abajo
+    new THREE.MeshBasicMaterial({ color: 0x9bf6ff }), // Cara frente
+    new THREE.MeshBasicMaterial({ color: 0xa0c4ff })  // Cara atrás
 ];
 
+// Mesh: Crea el objeto final combinando la forma (geometría) con la apariencia (materiales).
 const cubo = new THREE.Mesh(geometry, materials);
+
+// Añadimos el cubo a la escena. Por defecto se coloca en el punto (0,0,0).
 scene.add(cubo);   
 
+// Alegramos la cámara 5 unidades en el eje Z para poder ver el objeto desde lejos.
 camera.position.z = 5;
 
+/**
+ * 3. BUCLE DE ANIMACIÓN
+ */
 function animate() {
+    // Le pedimos al navegador que ejecute esta función constantemente (sincronizado con los Hz del monitor).
     requestAnimationFrame(animate);
+
+    // ROTACIÓN: Aquí ocurre la magia. 
+    // Sumamos un pequeño valor a la rotación en X y en Y en cada frame.
+    // Como los valores son diferentes (0.01 y 0.02), el giro se ve asimétrico y más natural.
     cubo.rotation.x += 0.01;
     cubo.rotation.y += 0.02;
+
+    // Renderizado: El motor dibuja lo que la cámara está viendo en ese instante.
     renderer.render(scene, camera);
 }
+
+// Llamamos a la función por primera vez para que empiece el ciclo.
 animate();
 </script>
 </body>
