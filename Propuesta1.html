@@ -1,65 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Traslación - Caras Multicolor</title>
-<style>
-body { margin: 0; overflow: hidden; background: #121212; }
-#info {
-    position: absolute; top: 10px; left: 10px;
-    background: rgba(0,0,0,0.7); color: #00ffcc;
-    padding: 10px; border-radius: 8px; font-family: Arial;
-    border: 1px solid #00ffcc;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Traslación - Caras Multicolor</title>
+    <style>
+        /* CSS para que el lienzo ocupe toda la pantalla sin márgenes */
+        body { 
+            margin: 0;        /* Quita el espacio extra alrededor de la página */
+            overflow: hidden; /* Evita que aparezcan barras de scroll si el contenido se sale */
+            background: #121212; /* Color de fondo oscuro (Gris casi negro) */
+        }
+        
+        /* Estilos para un posible texto de ayuda en pantalla */
+        #info {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(0,0,0,0.7); /* Fondo negro con transparencia */
+            color: #00ffcc; /* Color de letra verde neón */
+            padding: 10px; border-radius: 8px; font-family: Arial;
+            border: 1px solid #00ffcc;
+        }
+    </style>
 </head>
 <body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
+/**
+ * --- 1. CONFIGURACIÓN DEL ESPACIO ---
+ */
+
+// Scene: Es el contenedor "padre". Todo lo que quieras ver debe ser añadido aquí.
 const scene = new THREE.Scene();
+
+// PerspectiveCamera: Crea una vista con profundidad (efecto 3D real).
+// (75): Ángulo de visión; (ancho/alto): Proporción de pantalla; (0.1, 1000): Rango de visibilidad.
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+// Aleja la cámara del centro (0,0,0) hacia atrás (eje Z) para que el cubo no nos "atropelle".
 camera.position.z = 5;
 
+// WebGLRenderer: Es el "artista" que dibuja los objetos 3D usando la tarjeta de video del PC.
+// antialias: true sirve para que los bordes del cubo no se vean pixelados o con "serrucho".
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+// Le dice al renderizador que ocupe todo el ancho y alto de la ventana del navegador.
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Agrega el lienzo generado (canvas) al cuerpo (body) del HTML para que lo veamos.
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry(1,1,1);
+/**
+ * --- 2. CREACIÓN DEL CUBO ---
+ */
 
-// Definimos un arreglo con 6 materiales (uno para cada cara)
+// BoxGeometry: Define la "cáscara" o estructura del cubo (ancho, alto, profundidad).
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+// Arreglo de Materiales: Creamos 6 colores distintos. 
+// MeshBasicMaterial se usa porque brilla por sí mismo (no necesita que pongas luces).
 const materials = [
-    new THREE.MeshBasicMaterial({ color: 0xff0055 }), // Derecha
-    new THREE.MeshBasicMaterial({ color: 0x00ffcc }), // Izquierda
-    new THREE.MeshBasicMaterial({ color: 0x0066ff }), // Arriba
-    new THREE.MeshBasicMaterial({ color: 0xffcc00 }), // Abajo
-    new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Frente
-    new THREE.MeshBasicMaterial({ color: 0x55ff00 })  // Atrás
+    new THREE.MeshBasicMaterial({ color: 0xff0055 }), // Cara Derecha  (+X)
+    new THREE.MeshBasicMaterial({ color: 0x00ffcc }), // Cara Izquierda (-X)
+    new THREE.MeshBasicMaterial({ color: 0x0066ff }), // Cara Arriba    (+Y)
+    new THREE.MeshBasicMaterial({ color: 0xffcc00 }), // Cara Abajo     (-Y)
+    new THREE.MeshBasicMaterial({ color: 0xff00ff }), // Cara Frente    (+Z)
+    new THREE.MeshBasicMaterial({ color: 0x55ff00 })  // Cara Atrás     (-Z)
 ];
 
+// Mesh: Es el objeto final. Une la Geometría (forma) con los Materiales (color).
 const cubo = new THREE.Mesh(geometry, materials);
+
+// Agrega el cubo recién creado a la escena para que el renderizador sepa que debe dibujarlo.
 scene.add(cubo);
 
-let direccion = 1;     
-const velocidad = 0.05;
-const limite = 2;
+/**
+ * --- 3. LÓGICA DE MOVIMIENTO ---
+ */
 
+let direccion = 1;      // Indica hacia dónde va: 1 (derecha), -1 (izquierda).
+const velocidad = 0.05; // La distancia que el cubo recorre en cada milisegundo.
+const limite = 2;       // La "pared" invisible en el eje X donde el cubo debe rebotar.
+
+/**
+ * --- 4. BUCLE DE RENDERIZADO (El corazón de la animación) ---
+ */
 function animate() {
+    // Esta función se llama a sí misma constantemente (60 veces por segundo aprox.)
     requestAnimationFrame(animate);
+
+    // TRASLACIÓN: Suma velocidad a la posición actual en X.
     cubo.position.x += velocidad * direccion;
-    // Rotamos un poco para que se vean las caras de colores
+
+    // ROTACIÓN: Hace que el cubo gire en Y y X para mostrar todas sus caras de colores.
     cubo.rotation.y += 0.01;
     cubo.rotation.x += 0.01;
 
+    // DETECCIÓN DE COLISIÓN/REBOTE:
+    // Si la posición del cubo llega a 2 o a -2, multiplicamos dirección por -1.
+    // (Ejemplo: 1 * -1 = -1. El cubo ahora irá hacia el otro lado).
     if (cubo.position.x > limite || cubo.position.x < -limite) {
         direccion *= -1;
     }
+
+    // Finalmente, el renderizador dibuja la escena actualizada desde el punto de vista de la cámara.
     renderer.render(scene, camera);
 }
+
+// Llama a la función por primera vez para iniciar el ciclo infinito.
 animate();
 
+/**
+ * --- 5. SOPORTE PARA CAMBIO DE TAMAÑO ---
+ */
+
+// Si el usuario cambia el tamaño de la ventana, ajustamos todo para que no se vea deformado.
 window.addEventListener('resize', () => {
+    // Ajusta el tamaño del lienzo al nuevo tamaño de ventana.
     renderer.setSize(window.innerWidth, window.innerHeight);
+    // Actualiza la proporción de la cámara (aspect ratio).
     camera.aspect = window.innerWidth / window.innerHeight;
+    // Avisa a la cámara que sus cálculos internos deben cambiar.
     camera.updateProjectionMatrix();
 });
 </script>
