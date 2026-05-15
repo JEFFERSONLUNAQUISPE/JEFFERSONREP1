@@ -1,0 +1,69 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def calcular_modelo_geometrico(l1, l2, q1_grados, q2_grados):
+    """Calcula las coordenadas (X, Y) del brazo robótico."""
+    # 1. Convertimos los ángulos de los motores a radianes
+    q1_rad = np.radians(q1_grados)
+    q2_rad = np.radians(q2_grados)
+
+    # 2. Posición del Codo (Articulación 1)
+    x1 = l1 * np.cos(q1_rad)
+    y1 = l1 * np.sin(q1_rad)
+
+    # 3. Posición de la Punta / Efector Final (Articulación 2)
+    # Se suma el ángulo 1 y el ángulo 2 porque el segundo eslabón se mueve respecto al primero
+    x2 = x1 + l2 * np.cos(q1_rad + q2_rad)
+    y2 = y1 + l2 * np.sin(q1_rad + q2_rad)
+
+    # Retornamos los puntos ordenados: [Base, Codo, Punta]
+    posiciones_x = [0, x1, x2]
+    posiciones_y = [0, y1, y2]
+
+    return posiciones_x, posiciones_y
+
+
+# --- PRUEBA EN VIVO ---
+# Configura las longitudes de los brazos
+longitud_brazo1 = 8.0
+longitud_brazo2 = 6.0
+
+# Configura los ángulos de tus motores (¡Pruébalo cambiando estos valores!)
+angulo_motor1 = 60  # Grados respecto al suelo
+angulo_motor2 = -30  # Grados respecto al primer brazo
+
+# Ejecutamos el modelo geométrico
+x, y = calcular_modelo_geometrico(
+    longitud_brazo1, longitud_brazo2, angulo_motor1, angulo_motor2
+)
+
+# --- GRAFICAR EL RESULTADO ---
+plt.figure(figsize=(6, 6))
+
+# Dibujamos las líneas del robot y los puntos de las articulaciones
+plt.plot(x, y, "-o", color="blue", linewidth=4, markersize=10, label="Robot")
+plt.plot(x[0], y[0], "ro", markersize=12, label="Base (Origen 0,0)")
+plt.plot(x[2], y[2], "go", markersize=12, label="Punta (Efector Final)")
+
+# Detalles visuales de la gráfica
+plt.xlim(-15, 15)
+plt.ylim(-15, 15)
+plt.grid(True, linestyle="--")
+plt.axhline(0, color="black", linewidth=1)
+plt.axvline(0, color="black", linewidth=1)
+plt.title("Modelo Geométrico Directo (2 GDL)", fontsize=14)
+plt.xlabel("Eje X (Horizontal)")
+plt.ylabel("Eje Y (Vertical)")
+plt.legend()
+
+# Mostrar las coordenadas calculadas en la esquina del gráfico
+plt.text(
+    -14,
+    12,
+    f"Ángulos: Q1={angulo_motor1}°, Q2={angulo_motor2}°\n\nCoordenada Final:\nX = {x[2]:.2f}\nY = {y[2]:.2f}",
+    fontsize=11,
+    bbox=dict(facecolor="lightyellow", alpha=0.9),
+)
+
+plt.show()
